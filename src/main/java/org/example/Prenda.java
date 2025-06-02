@@ -13,6 +13,8 @@ public class Prenda {
   Material tipoDeMaterial;
   Trama trama;
   Formalidad formalidad;
+  Integer temperaturaMinima;
+  Integer temperaturaMaxima;
 
 //  enum Formalidad {
 //    FORMAL("FORMAL"), INFORMAL("INFORMAL"), NEUTRO("NEUTRO");
@@ -24,13 +26,14 @@ public class Prenda {
 //  }
 
 
-  enum TipoPrenda {
+  public enum TipoPrenda {
 
-    ZAPATO(Categoria.CALZADO, "zapato"),
+    ZAPATOS(Categoria.CALZADO, "zapato"),
     POLLERA(Categoria.PARTE_INFERIOR, "pollera"),
     CAMISA(Categoria.PARTE_SUPERIOR, "camisa"),
     PANTALON(Categoria.PARTE_INFERIOR, "pantalon"),
-    ZAPATILLA(Categoria.CALZADO, "zapatilla");
+    ZAPATILLAS(Categoria.CALZADO, "zapatilla"),
+    CAMISETA(Categoria.PARTE_SUPERIOR, "camiseta" );
 
     Categoria categoria;
     String nombre;
@@ -45,7 +48,7 @@ public class Prenda {
     }
   }
 
-  enum Categoria {
+  public enum Categoria {
     PARTE_SUPERIOR("PARTE_SUPERIOR"), PARTE_INFERIOR("PARTE_INFERIOR"), CALZADO("CALZADO"), ACCESORIO("ACCESORIO");
 
     String nombre;
@@ -55,7 +58,7 @@ public class Prenda {
     }
   }
 
-  enum Material {
+  public enum Material {
     ALGODON("ALGODON"), POLIESTER("POLIESTER"), LANA("LANA"), CUERO("CUERO");
 
     String nombre;
@@ -70,10 +73,10 @@ public class Prenda {
       throw new PrendaInvalidaException("no se especificó el tipo de prenda");
     }
     if (colorPrincipal == null) {
-      throw new PrendaInvalidaException("no se especificó el tipo de prenda");
+      throw new PrendaInvalidaException("no se especificó el color de prenda");
     }
     if (tipoDeMaterial == null) {
-      throw new PrendaInvalidaException("no se especificó el tipo de prenda");
+      throw new PrendaInvalidaException("no se especificó el tipo de material");
     }
   }
 
@@ -83,7 +86,7 @@ public class Prenda {
     }
   }
 
-  enum Trama {
+  public enum Trama {
     LISA("LISA"), RAYADA("RAYADA"), ACUADROS("ACUADROS"), CONLUNARES("CONLUNARES"), ESTAMPADO("ESTAMPADO");
 
     String nombreTrama;
@@ -93,11 +96,50 @@ public class Prenda {
     }
   }
 
-  Prenda(TipoPrenda tipoDePrenda, Color colorPrincipal, Color colorSecundario, Material tipoDeMaterial, Trama trama) {
+  public boolean esAcordeATemperatura(Integer temperatura) {
+    if (temperatura == null) {
+      return true; // Si no se especifica temperatura, se considera acorde
+    }
+    return temperatura >= temperaturaMinima && temperatura <= temperaturaMaxima;
+  }
+
+  public Prenda(TipoPrenda tipoDePrenda, Color colorPrincipal, Color colorSecundario, Material tipoDeMaterial, Trama trama, Formalidad formalidad, Integer temperaturaMinima, Integer temperaturaMaxima) {
       this.tipoDePrenda = tipoDePrenda;
       this.colorPrincipal = colorPrincipal;
       this.colorSecundario = colorSecundario;
       this.tipoDeMaterial = tipoDeMaterial;
       this.trama = trama;
+      this.formalidad = formalidad;
+      this.temperaturaMinima = temperaturaMinima;
+      this.temperaturaMaxima = temperaturaMaxima;
+
+  }
+
+  public TipoPrenda getTipo() {
+    return tipoDePrenda;
+  }
+  public Color getColorPrincipal() {
+    return colorPrincipal;
+  }
+  public Color getColorSecundario() {
+    return colorSecundario;
+  }
+  public String getNombre() {
+    return tipoDePrenda.nombre;
+  }
+  public String getMaterial() {
+    return tipoDeMaterial.nombre;
+  }
+  public Trama getTrama() {
+    return trama;
+  }
+  public Formalidad getFormalidad() {
+    return formalidad;
+  }
+  public Integer getTemperaturaMinima() {
+    return temperaturaMinima;
+  }
+  public Integer getTemperaturaMaxima() {
+    return temperaturaMaxima;
   }
 }

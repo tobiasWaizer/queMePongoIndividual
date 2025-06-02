@@ -1,17 +1,15 @@
 package org.example;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 
 public class Guardarropa {
-  List<Prenda> prendasSuperiores;
-  List<Prenda> prendasInferiores;
-  List<Prenda> calzados;
+  public List<Prenda> prendasSuperiores;
+  public List<Prenda> prendasInferiores;
+  public List<Prenda> calzados;
 
   Prenda obtenerPrendaAleatoria(List<Prenda> listaPrendas){
     Random random = new Random();
@@ -26,7 +24,7 @@ public class Guardarropa {
 //    return new Atuendo (parteSuperior, parteInferior, calzado);
 //  } ;// el problema es q solo nos da una sola sugerencia y necesito varias
 
-  List<Atuendo> generarSugerencias() {
+  public List<Atuendo> generarSugerencias() {
     return Sets.cartesianProduct(
             new HashSet<>(prendasSuperiores),
             new HashSet<>(prendasInferiores),
@@ -37,11 +35,20 @@ public class Guardarropa {
         .collect(Collectors.toList());
   }
 
-  List<Atuendo> filtrarPorFormalidad(Formalidad formalidad, List<Atuendo> atuendos) {
+  public List<Atuendo> filtrarPorFormalidad(Formalidad formalidad, List<Atuendo> atuendos) {
     return atuendos.stream()
         .filter(atuendo -> atuendo.parteSuperior.formalidad == formalidad
             && atuendo.parteInferior.formalidad == formalidad
             && atuendo.calzado.formalidad == formalidad)
+        .collect(Collectors.toList());
+  }
+
+  public List<Atuendo> filtrarPorTemperatura(Integer temperatura, List<Atuendo> atuendos) {
+
+    return atuendos.stream()
+        .filter(atuendo -> atuendo.parteSuperior.esAcordeATemperatura(temperatura)
+            && atuendo.parteInferior.esAcordeATemperatura(temperatura)
+            && atuendo.calzado.esAcordeATemperatura(temperatura))
         .collect(Collectors.toList());
   }
 
