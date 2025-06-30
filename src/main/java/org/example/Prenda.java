@@ -35,8 +35,8 @@ public class Prenda {
     ZAPATILLAS(Categoria.CALZADO, "zapatilla"),
     CAMISETA(Categoria.PARTE_SUPERIOR, "camiseta" );
 
-    Categoria categoria;
-    String nombre;
+    public Categoria categoria;
+    public String nombre;
 
     TipoPrenda(Categoria categoria, String nombre) {
       this.categoria = categoria;
